@@ -79,7 +79,9 @@
         const Sparkles = createIcon('<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/>');
         const Leaf = createIcon('<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>');
         const Pause = createIcon('<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>');
-
+        const MenuIcon = createIcon('<line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>');
+        const XIcon = createIcon('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>');
+        
         // --- ELEMENTOS DE VIDA: Acuarelas, Line Art y Fondos Atmosféricos ---
 
         const WatercolorWash = ({ color, style }) => (
@@ -148,6 +150,7 @@
 
         const App = () => {
           const [scrolled, setScrolled] = useState(false);
+          const [isMenuOpen, setIsMenuOpen] = useState(false);
           const [submitted, setSubmitted] = useState(false);
           const [loading, setLoading] = useState(false);
           const [isPlaying, setIsPlaying] = useState(false);
@@ -199,9 +202,9 @@
 
           const itinerary = [
             { time: "02:00 PM", title: "Ceremonia Religiosa", desc: "El momento más trascendental del día, donde consagraremos nuestro amor y recibiremos la bendición de Dios.", phrase: "«Y sobre todas estas cosas vestíos de amor, que es el vínculo perfecto.»", icon: <Heart className="w-5 h-5" /> },
-            { time: "04:00 PM", title: "Sunset Cóctel", desc: "Brindis y conversación mientras el sol se oculta tras la cordillera.", phrase: "Donde el sol se despide, la magia despierta.", icon: <Utensils className="w-5 h-5" /> },
-            { time: "06:00 PM", title: "Comida de Celebración", desc: "Un 'late lunch' diseñado para deleitarnos, compartir el pan y saborear el momento en compañía.", phrase: "Donde el buen comer y el amor se sientan a la mesa.", icon: <Sun className="w-5 h-5" /> },
-            { time: "07:30 PM", title: "Celebración", desc: "Baile y alegría bajo el cielo estrellado.", phrase: "Porque la vida es hoy y el mañana es nuestro.", icon: <Music className="w-5 h-5" /> }
+            { time: "03:00 PM", title: "Sunset Cóctel", desc: "Brindis y conversación mientras el sol se oculta tras la cordillera.", phrase: "Donde el sol se despide, la magia despierta.", icon: <Utensils className="w-5 h-5" /> },
+            { time: "07:00 PM", title: "Comida de Celebración", desc: "Una comida diseñada para deleitarnos, compartir y saborear el momento en compañía.", phrase: "Donde el buen comer y el amor se sientan a la mesa.", icon: <Sun className="w-5 h-5" /> },
+            { time: "09:00 PM", title: "Celebración", desc: "Baile y alegría bajo el cielo estrellado.", phrase: "Porque la vida es hoy y el mañana es nuestro.", icon: <Music className="w-5 h-5" /> }
           ];
 
           return (
@@ -209,29 +212,57 @@
               
               <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-multiply" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
 
-              <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-6'}`}>
-                <div className="container mx-auto px-6 flex justify-between items-center">
-                  <div className="flex items-center space-x-4 group cursor-pointer">
-                    <div className={`flex flex-col items-center leading-none transition-colors duration-500 ${scrolled ? 'text-[#5C768D]' : 'text-[#FDF7F2]'}`}>
-                      <span className="text-2xl font-light">L</span>
-                      <div className={`h-[1px] w-6 my-0.5 transition-colors duration-500 ${scrolled ? 'bg-[#5C768D]/30' : 'bg-[#FDF7F2]/40'}`}></div>
-                      <span className="text-2xl font-light">G</span>
-                    </div>
-                    <div className={`flex flex-col border-l pl-4 transition-colors duration-500 ${scrolled ? 'border-[#EAD3C6]' : 'border-[#FDF7F2]/30'}`}>
-                      <span className={`text-[10px] uppercase tracking-[0.4em] font-sans font-extrabold transition-colors duration-500 ${scrolled ? 'text-[#5C768D]' : 'text-white'}`}>Laura & Gabriel</span>
-                      <span className={`text-[8px] uppercase tracking-[0.2em] font-sans mt-0.5 font-bold transition-colors duration-500 ${scrolled ? 'text-[#7F8C8D]' : 'text-white/70'}`}>08 . 08 . 2026</span>
-                    </div>
-                  </div>
-                  <div className={`hidden md:flex space-x-10 text-[10px] uppercase tracking-[0.3em] font-sans font-bold transition-colors duration-500 ${scrolled ? 'text-[#7F8C8D]' : 'text-white/80'}`}>
-                    <a href="#inicio" className={`transition-colors ${scrolled ? 'hover:text-[#5C768D]' : 'hover:text-white'}`}>Inicio</a>
-                    <a href="#itinerario" className={`transition-colors ${scrolled ? 'hover:text-[#5C768D]' : 'hover:text-white'}`}>Itinerario</a>
-                    <a href="#vestimenta" className={`transition-colors ${scrolled ? 'hover:text-[#5C768D]' : 'hover:text-white'}`}>Detalles</a>
-                    <a href="#rsvp" className={`transition-colors ${scrolled ? 'hover:text-[#5C768D]' : 'hover:text-white'}`}>Confirmar</a>
-                  </div>
-                  <a href="#rsvp" className={`px-8 py-2.5 rounded-full text-[10px] font-sans uppercase tracking-widest shadow-lg hover:scale-105 transition-all duration-500 ${scrolled ? 'bg-[#5C768D] text-white shadow-blue-900/10' : 'bg-white/10 backdrop-blur-md border border-white/40 text-white hover:bg-white hover:text-[#2C3E50]'}`}>
-                    RSVP
-                  </a>
-                </div>
+              <<nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled || isMenuOpen ? 'bg-white/95 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-6'}`}>
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center space-x-4 group cursor-pointer">
+            <div className={`flex flex-col items-center leading-none transition-colors duration-500 ${scrolled || isMenuOpen ? 'text-[#5C768D]' : 'text-[#FDF7F2]'}`}>
+              <span className="text-2xl font-light">L</span>
+              <div className={`h-[1px] w-6 my-0.5 transition-colors duration-500 ${scrolled || isMenuOpen ? 'bg-[#5C768D]/30' : 'bg-[#FDF7F2]/40'}`}></div>
+              <span className="text-2xl font-light">G</span>
+            </div>
+            <div className={`flex flex-col border-l pl-4 transition-colors duration-500 ${scrolled || isMenuOpen ? 'border-[#EAD3C6]' : 'border-[#FDF7F2]/30'}`}>
+              <span className={`text-[10px] uppercase tracking-[0.4em] font-sans font-extrabold transition-colors duration-500 ${scrolled || isMenuOpen ? 'text-[#5C768D]' : 'text-white'}`}>Laura & Gabriel</span>
+              <span className={`text-[8px] uppercase tracking-[0.2em] font-sans mt-0.5 font-bold transition-colors duration-500 ${scrolled || isMenuOpen ? 'text-[#7F8C8D]' : 'text-white/70'}`}>08 . 08 . 2026</span>
+            </div>
+          </div>
+
+          {/* Menú Desktop (Se oculta en móvil) */}
+          <div className={`hidden md:flex space-x-10 text-[10px] uppercase tracking-[0.3em] font-sans font-bold transition-colors duration-500 ${scrolled ? 'text-[#7F8C8D]' : 'text-white/80'}`}>
+            <a href="#inicio" className={`transition-colors ${scrolled ? 'hover:text-[#5C768D]' : 'hover:text-white'}`}>Inicio</a>
+            <a href="#itinerario" className={`transition-colors ${scrolled ? 'hover:text-[#5C768D]' : 'hover:text-white'}`}>Itinerario</a>
+            <a href="#vestimenta" className={`transition-colors ${scrolled ? 'hover:text-[#5C768D]' : 'hover:text-white'}`}>Detalles</a>
+            <a href="#rsvp" className={`transition-colors ${scrolled ? 'hover:text-[#5C768D]' : 'hover:text-white'}`}>Confirmar</a>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            {/* Botón RSVP Desktop */}
+            <a href="#rsvp" className={`hidden md:inline-block px-8 py-2.5 rounded-full text-[10px] font-sans uppercase tracking-widest shadow-lg hover:scale-105 transition-all duration-500 ${scrolled ? 'bg-[#5C768D] text-white shadow-blue-900/10' : 'bg-white/10 backdrop-blur-md border border-white/40 text-white hover:bg-white hover:text-[#2C3E50]'}`}>
+              RSVP
+            </a>
+            
+            {/* Botón Menú Móvil */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`md:hidden p-2 transition-colors ${scrolled || isMenuOpen ? 'text-[#5C768D]' : 'text-white'}`}
+            >
+              {isMenuOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Menú Móvil Desplegable */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white/95 backdrop-blur-lg border-t border-[#EAD3C6]/30 animate-fade-in">
+            <div className="flex flex-col items-center py-10 space-y-8 text-[11px] uppercase tracking-[0.3em] font-sans font-bold text-[#5C768D]">
+              <a href="#inicio" onClick={() => setIsMenuOpen(false)}>Inicio</a>
+              <a href="#itinerario" onClick={() => setIsMenuOpen(false)}>Itinerario</a>
+              <a href="#vestimenta" onClick={() => setIsMenuOpen(false)}>Detalles</a>
+              <a href="#rsvp" onClick={() => setIsMenuOpen(false)} className="bg-[#5C768D] text-white px-10 py-4 rounded-full">Confirmar</a>
+            </div>
+          </div>
+        )}
+      </nav>>
               </nav>
 
               <header id="inicio" className="relative h-screen flex items-center justify-center overflow-hidden">
